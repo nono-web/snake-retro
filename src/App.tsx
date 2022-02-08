@@ -40,13 +40,13 @@ function App() {
 		[ snake, apple, gameOver ]
 	)
 
-	function handleSetScore() {
+	const handleSetScore = () => {
 		if (score > Number(localStorage.getItem("snakeScore"))) {
 			localStorage.setItem("snakeScore", JSON.stringify(score))
 		}
 	}
 
-	function play() {
+	const play = () => {
 		setSnake(initialSnake)
 		setApple(initialApple)
 		setDirection([ 1, 0 ])
@@ -55,7 +55,7 @@ function App() {
 		setGameOver(false)
 	}
 
-	function checkCollision(head: number[]) {
+	const checkCollision = (head: number[]) => {
 		for (let i = 0; i < head.length; i++) {
 			if (head[i] < 0 || head[i] * scale >= canvasX) return true
 		}
@@ -65,7 +65,7 @@ function App() {
 		return false
 	}
 
-	function appleAte(newSnake: number[][]) {
+	const  appleAte = (newSnake: number[][]) => {
 		let coord = apple.map(() => Math.floor(Math.random() * canvasX / scale))
 		if (newSnake[0][0] === apple[0] && newSnake[0][1] === apple[1]) {
 			let newApple = coord
@@ -76,7 +76,7 @@ function App() {
 		return false
 	}
 
-	function runGame() {
+	const  runGame = () => {
 		const newSnake = [ ...snake ]
 		const newSnakeHead = [ newSnake[0][0] + direction[0], newSnake[0][1] + direction[1] ]
 		newSnake.unshift(newSnakeHead)
@@ -91,7 +91,7 @@ function App() {
 		setSnake(newSnake)
 	}
 
-	function changeDirection(e: React.KeyboardEvent<HTMLDivElement>) {
+	const  changeDirection = (e: React.KeyboardEvent<HTMLDivElement>) => {
 		switch (e.key) {
 			case "ArrowLeft":
 				setDirection([ -1, 0 ])
@@ -112,7 +112,7 @@ function App() {
 		<div onKeyDown={(e) => changeDirection(e)}>
 			<img id="fruit" src={AppleLogo} alt="fruit" width="30" />
 			<img src={Monitor} alt="fruit" width="4000" className="monitor" />
-			<canvas className="playArea" ref={canvasRef} width={`${canvasX}px`} height={`${canvasY}px`} />
+			<canvas className="playArea" ref={canvasRef} width={`${canvasX}em`} height={`${canvasY}em`} />
 			{gameOver && <div className="gameOver">Game Over</div>}
 			<button onClick={play} className="playButton">
 				Play
